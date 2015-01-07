@@ -58,7 +58,6 @@ typedef unsigned long int ulong;
 #define uzing(t, n, v) t n = (t)(v); if(0 != n)
 #define uzingt(tname, v) tname* p##tname = (tname*)(v); if(nullptr != p##tname)
 #define uzingp(t, v) t* p##t= (t*)(v); if(nullptr != p##t)
-//#define usingl(t, n, v) { t n = (t)(v); if(0 != n)
 
 #define STRNCPY2BUF(b, s){ size_t sz = sizeof(b); strncpy(b, s, sz); b[sz - 1] = 0; }
 
@@ -66,4 +65,4 @@ typedef unsigned long int ulong;
 #define FILENAME_MAX 256
 #endif
 
-#endif /* DEFS_H_ */
+#endif

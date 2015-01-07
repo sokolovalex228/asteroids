@@ -10,6 +10,7 @@ SOURCES += main.cpp
 HEADERS += src/*.h
 
 SOURCES += src/GameAsteroids.cpp
+SOURCES += src/VBO.cpp
 
 include(deployment.pri)
 qtcAddDeployment()

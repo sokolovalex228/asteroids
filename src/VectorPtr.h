@@ -1,5 +1,5 @@
-#ifndef PVECTOR_H
-#define PVECTOR_H
+#ifndef _VECTOR_PTR_H_
+#define _VECTOR_PTR_H_
 
 #include <vector>
 
@@ -68,4 +68,4 @@ public:
 	
 };
 
-#endif // PVECTOR_H
+#endif

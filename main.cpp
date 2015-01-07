@@ -8,7 +8,7 @@
 
 #include "GameAsteroids.h"
 
-static int g_win_id = 0;
+static int gWinId = 0;
 
 bool getScreenSize(int* pWidth, int* pHeight)
 {
@@ -66,11 +66,14 @@ void onDisplay()
 
 void onKeyboard(unsigned char key, int x, int y)
 {
+	(void)x;
+	(void)y;
+
 	switch (key)
 	{
 		case 27: // Escape key
 		{
-			glutDestroyWindow(g_win_id);
+			glutDestroyWindow(gWinId);
 			printf("exit\n");
 
 			exit(0);
@@ -113,39 +116,38 @@ void onResize(int width, int height)
 
 int main(int argc, char** argv)
 {
-	int width = 480;
-	int height = 800;
+#if 1
+	char buff[1024];
+	getcwd(buff, sizeof(buff));
+	printf("getcwd(%s)\n", buff);
+	fflush(stdout);
+#endif
+
 	int widthScreen;
 	int heightScreen;
 
-	char buff[1024];
-	getcwd(buff, sizeof(buff));
-
-	printf("==%s\n", buff);
-
 	if (true == getScreenSize(&widthScreen, &heightScreen))
 	{
-		int x = (widthScreen - width) / 2;
-		int y = (heightScreen - height) / 2;
-
-		printf("cwd:");
-		fflush(stdout);
-		system("pwd");
-
 		glutInit(&argc, argv);
 
-		if (0 != (g_win_id = glutCreateWindow("Asteroids")))
+		if (0 != (gWinId = glutCreateWindow("Asteroids")))
 		{
-			glutInitWindowSize(width, height);
-			glutInitWindowPosition(x, y);
+			int widthWindow = 480;
+			int heightWindow = 800;
 
-			glutPositionWindow(x, y);
+			int xWindow = (widthScreen - widthWindow) / 2;
+			int yWindow = (heightScreen - heightWindow) / 2;
+
+			glutInitWindowSize(widthWindow, heightWindow);
+			glutInitWindowPosition(xWindow, yWindow);
+
+			glutPositionWindow(xWindow, yWindow);
 			glutKeyboardFunc(onKeyboard);
 			glutMouseFunc(onMouseClick);
 			glutReshapeFunc(onResize);
 			//glutMotionFunc(OnMouseMove);
 			glutPassiveMotionFunc(onMouseMove);
-			glutReshapeWindow(width, height);
+			glutReshapeWindow(widthWindow, heightWindow);
 
 			glutIdleFunc(onDisplay);
 			glutDisplayFunc(onDisplay);

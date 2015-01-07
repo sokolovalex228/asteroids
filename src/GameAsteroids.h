@@ -1,10 +1,11 @@
-#ifndef GAMEASTEROIDS_H
-#define GAMEASTEROIDS_H
+#ifndef _GAMEASTEROIDS_H_
+#define _GAMEASTEROIDS_H_
 
 #include "defs.h"
 
 #include "VectorPtr.h"
-#include "Point2f.h"
+#include "Point3f.h"
+#include "VBO.h"
 
 class GameAsteroids
 {
@@ -25,4 +26,4 @@ public:
 
 extern GameAsteroids gameAsteroids;
 
-#endif // GAMEASTEROIDS_H
+#endif

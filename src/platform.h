@@ -40,22 +40,19 @@
 
 #define PLATFORM_LINUX 1
 
-#include <linux/stddef.h>
-#include <stdlib.h>
+//#include <linux/stddef.h>
+
 #include <unistd.h>
 #include <malloc.h>
 #include <libgen.h>
 
 #include <GL/gl.h>
-#include <GL/glx.h>
-#include <GL/glxext.h>
+#include <GLES2/gl2.h>
 
 #include <dlfcn.h>
 #include <jansson.h>
 
 #include <pthread.h>
-
-//#define myinline inline
 
 #elif defined(__APPLE__)
 

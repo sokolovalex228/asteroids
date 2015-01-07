@@ -14,8 +14,8 @@ GameAsteroids::~GameAsteroids()
 
 bool GameAsteroids::init()
 {
-	Point2f p;
-	VectorPtr<Point2f> v;
+	Point3f p;
+	VectorPtr<Point3f> v;
 
 	return false;
 }
