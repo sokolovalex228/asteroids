@@ -31,7 +31,7 @@ public:
 		return *this;
 	}
 
-	static Rect fromAbs(double x1, double y1, double x2, double y2)
+	static Rect fromAbs(float x1, float y1, float x2, float y2)
 	{
 		return Rect(x1, y1, x2 - x1, y2 - y1);
 	}

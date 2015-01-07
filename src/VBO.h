@@ -1,11 +1,10 @@
 #ifndef _VBO_H_
 #define _VBO_H_
 
-#include "Rect.h"
-
 #include <vector>
-
 using namespace std;
+
+#include "Rect.h"
 
 class VBO
 {
@@ -22,10 +21,11 @@ public:
 	void clear();
 	bool draw();
 
+private:
 	unsigned int _id;
 
-	vector<float> _vectorVerts;
-	vector<float> _vectorTVerts;
+	vector<float> _verts;
+	vector<float> _tverts;
 };
 
 #endif

@@ -7,7 +7,7 @@ public:
 
 	inline Point3f()
 	{
-//		_xy[0] =_xy[1] = _xy[2] = 0.0f;
+		//_xy[0] =_xy[1] = _xy[2] = 0.0f;
 	}
 
 	inline Point3f(float x, float y, float z)

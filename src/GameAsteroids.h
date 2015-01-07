@@ -6,6 +6,7 @@
 #include "VectorPtr.h"
 #include "Point3f.h"
 #include "VBO.h"
+#include "Screen1.h"
 
 class GameAsteroids
 {
@@ -22,6 +23,9 @@ public:
 	void mouseLeft(int x, int y, bool down);
 	void resize(int width, int height);
 	void initialize();
+
+private:
+	Screen1 screen1;
 };
 
 extern GameAsteroids gameAsteroids;

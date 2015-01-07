@@ -21,8 +21,8 @@ void VBO::clear()
 {
 	deleteBuffer();
 
-	_vectorVerts.clear();
-	_vectorTVerts.clear();
+	_verts.clear();
+	_tverts.clear();
 }
 
 bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
@@ -55,7 +55,7 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 		{
 			for(size_t nIx = 0; nIx < nSize; nIx++)
 			{
-				_vectorVerts.push_back(p_float[nIx]);
+				_verts.push_back(p_float[nIx]);
 			} // nIx
 		}
 	}
@@ -66,7 +66,7 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 		{
 			for(size_t nIx = 0; nIx < nSize; nIx++)
 			{
-				_vectorTVerts.push_back(p_float[nIx]);
+				_tverts.push_back(p_float[nIx]);
 			} // nIx
 		}
 	}
@@ -78,12 +78,12 @@ bool VBO::draw()
 {
 #if 0
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, &_vectorVerts[0]);
+	glVertexPointer(3, GL_FLOAT, 0, &_verts[0]);
 
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, &_vectorTVerts[0]);
+	glTexCoordPointer(2, GL_FLOAT, 0, &_tverts[0]);
 
-	glDrawArrays(GL_TRIANGLES, 0, _vectorVerts.size() / 3);
+	glDrawArrays(GL_TRIANGLES, 0, _verts.size() / 3);
 	
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -96,8 +96,8 @@ bool VBO::draw()
 
 		glBindBuffer(GL_ARRAY_BUFFER, _id);
 		glVertexPointer(3, GL_FLOAT, 0, (void*)0);
-		glTexCoordPointer(2, GL_FLOAT, 0, (void*)(_vectorVerts.size() * sizeof(_vectorVerts[0])));
-		glDrawArrays(GL_TRIANGLES, 0, _vectorVerts.size() / 3);
+		glTexCoordPointer(2, GL_FLOAT, 0, (void*)(_verts.size() * sizeof(_verts[0])));
+		glDrawArrays(GL_TRIANGLES, 0, _verts.size() / 3);
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
@@ -120,14 +120,14 @@ bool VBO::build()
 	glGenBuffers(1, &_id);
 	glBindBuffer(GL_ARRAY_BUFFER, _id);
 
-	vector<float> vectorAll;
+	vector<float> all;
 
-	vectorAll.resize(_vectorVerts.size() + _vectorTVerts.size());
+	all.resize(_verts.size() + _tverts.size());
 
-	memcpy(&vectorAll[0], &_vectorVerts[0], sizeof(_vectorVerts[0]) * _vectorVerts.size());
-	memcpy(&vectorAll[_vectorVerts.size()], &_vectorTVerts[0], sizeof(_vectorTVerts[0]) * _vectorTVerts.size());
+	memcpy(&all[0], &_verts[0], sizeof(_verts[0]) * _verts.size());
+	memcpy(&all[_verts.size()], &_tverts[0], sizeof(_tverts[0]) * _tverts.size());
 
-	glBufferData(GL_ARRAY_BUFFER, vectorAll.size() * sizeof(vectorAll[0]), &vectorAll[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, all.size() * sizeof(all[0]), &all[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return true;

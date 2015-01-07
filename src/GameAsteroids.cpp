@@ -9,7 +9,6 @@ GameAsteroids::GameAsteroids()
 
 GameAsteroids::~GameAsteroids()
 {
-
 }
 
 bool GameAsteroids::init()

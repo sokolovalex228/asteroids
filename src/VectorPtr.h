@@ -2,7 +2,6 @@
 #define _VECTOR_PTR_H_
 
 #include <vector>
-
 using namespace std;
 
 template <class T>
@@ -52,15 +51,15 @@ public:
 	
 	void clear()
 	{
-		if(size_t nSize = getSize())
+		if(size_t size = getSize())
 		{
-			for(size_t nIx = 0; nIx < nSize; nIx++)
+			for(size_t i = 0; i < size; i++)
 			{
-				if(T* pT = vector<T*>::operator[](nIx))
+				if(T* pT = vector<T*>::operator[](i))
 				{
 					delete pT;
 				}
-			} // nIx
+			}
 			
 			vector<T*>::clear();
 		}
