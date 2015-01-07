@@ -10,7 +10,9 @@
 
 static int gWinId = 0;
 
-bool getScreenSize(int* pWidth, int* pHeight)
+typedef struct{ int x; int y; }t_size;
+
+t_size getScreenSize()
 {
 	uzing(Display*, pDisplay, XOpenDisplay(NULL))
 	{
@@ -25,12 +27,15 @@ bool getScreenSize(int* pWidth, int* pHeight)
 				Rotation aRotation;
 				SizeID indexConfig = XRRConfigCurrentConfiguration(pXRRScreenConfiguration, &aRotation);
 
-				*pWidth = pXRRScreenSize[indexConfig].width;
-				*pHeight = pXRRScreenSize[indexConfig].height;
+				t_size size
+				{
+					pXRRScreenSize[indexConfig].width,
+					pXRRScreenSize[indexConfig].height,
+				};
 
 				XCloseDisplay(pDisplay);
 
-				return true;
+				return size;
 			}
 			else
 			{
@@ -49,7 +54,7 @@ bool getScreenSize(int* pWidth, int* pHeight)
 		printf("Error: XOpenDisplay\n");
 	}
 
-	return false;
+	return {0, 0};
 }
 
 void onDisplay()
@@ -123,10 +128,9 @@ int main(int argc, char** argv)
 	fflush(stdout);
 #endif
 
-	int widthScreen;
-	int heightScreen;
+	t_size sizeScreen = getScreenSize();
 
-	if (true == getScreenSize(&widthScreen, &heightScreen))
+	if (0 < sizeScreen.x)
 	{
 		glutInit(&argc, argv);
 
@@ -135,8 +139,8 @@ int main(int argc, char** argv)
 			int widthWindow = 480;
 			int heightWindow = 800;
 
-			int xWindow = (widthScreen - widthWindow) / 2;
-			int yWindow = (heightScreen - heightWindow) / 2;
+			int xWindow = (sizeScreen.x - widthWindow) / 2;
+			int yWindow = (sizeScreen.y - heightWindow) / 2;
 
 			glutInitWindowSize(widthWindow, heightWindow);
 			glutInitWindowPosition(xWindow, yWindow);
