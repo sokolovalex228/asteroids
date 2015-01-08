@@ -3,9 +3,10 @@
 
 #include <map>
 #include <string>
+#include <vector>
 using namespace std;
 
-#include "Rect.h"
+#include "InfoSprite.h"
 
 class Atlas
 {
@@ -13,11 +14,16 @@ public:
 	Atlas();
 	virtual ~Atlas();
 
-	Rect get(const string& name);
-	void add(const string& name, const Rect& rect);
+	InfoSprite get(const string& name);
+	void add(const string& name, const InfoSprite& info);
+
+	bool load(const char* fileName);
+	bool save(const char* fileName);
+
+	void clear();
 
 private:
-	map<string, Rect> _map;
+	map<string, InfoSprite> _map;
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "Atlas.h"
+#include "Utils.h"
 
 Atlas::Atlas()
 {
@@ -9,11 +10,11 @@ Atlas::~Atlas()
 {
 }
 
-Rect Atlas::get(const string& name)
+InfoSprite Atlas::get(const string& name)
 {
 	if(0 < _map.size())
 	{
-		map<string, Rect>::iterator it = _map.find(name);
+		map<string, InfoSprite>::iterator it = _map.find(name);
 
 		if(_map.end() != it)
 		{
@@ -21,10 +22,171 @@ Rect Atlas::get(const string& name)
 		}
 	}
 
-	return Rect(0.0f, 0.0f, 0.99999f, 0.99999f);
+	return InfoSprite(Rect(0.0f, 0.0f, 0.99999f, 0.99999f), 1);
 }
 
-void Atlas::add(const string& name, const Rect& rect)
+void Atlas::add(const string& name, const InfoSprite& info)
 {
-	_map.insert(map<string, Rect>::value_type(name, rect));
+	_map.insert(map<string, InfoSprite>::value_type(name, info));
 }
+
+void Atlas::clear()
+{
+	_map.clear();
+}
+
+bool Atlas::load(const char* fileName)
+{
+	clear();
+
+	std::vector<char> buffer;
+
+	if(true == Utils::loadFromAssets(fileName, buffer))
+	{
+		json_error_t a_json_error_t;
+
+		uzing(json_t*, p_json_root, json_loadb(&buffer[0], buffer.size(), 0, &a_json_error_t))
+		{
+			uzing(json_t*, p_json_atlases, json_object_get(p_json_root, "atlases"))
+			{
+				int i;
+				json_t* p_json_atlas;
+
+				json_array_foreach(p_json_atlases, i, p_json_atlas)
+				{
+					string name;
+					Rect rect;
+
+					{
+						uzing(json_t*, p_json, json_object_get(p_json_atlas, "name"))
+						{
+							name = json_string_value(p_json);
+						}
+					}
+
+					{
+						uzing(json_t*, p_json, json_object_get(p_json_atlas, "uv"))
+						{
+							if(JSON_ARRAY == json_typeof(p_json))
+							{
+								float uv[2][2];
+								float* p_uv = &uv[0][0];
+
+								int i;
+								json_t* p_json_uv;
+								json_array_foreach(p_json, i, p_json_uv)
+								{
+									p_uv[i] = json_real_value(p_json_uv);
+								}
+
+								float all_uv[4][2] = { { uv[0][0], uv[0][1] }, { uv[1][0], uv[0][1] }, { uv[1][0], uv[1][1] }, { uv[0][0], uv[1][1] }, };
+
+								rect.fromFloatArray(all_uv);
+							}
+						}
+					}
+
+					json_int_t cols = 1;
+
+					{
+						uzing(json_t*, p_json, json_object_get(p_json_atlas, "cols"))
+						{
+							cols = json_integer_value(p_json);
+						}
+					}
+
+					add(name, InfoSprite(rect, cols));
+				}
+			}
+
+			json_decref(p_json_root);
+			return true;
+		}
+		else
+		{
+			printf("Error:json_load_file(%s)(%s)\n", fileName, a_json_error_t.text);
+		}
+	}
+
+	return false;
+}
+
+bool Atlas::save(const char* fileName)
+{
+	uzing(json_t*, p_json_root, json_object())
+	{
+		uzing(json_t*, p_json_array_atlases, json_array())
+		{
+			if(0 == json_object_set_new(p_json_root, "atlases", p_json_array_atlases))
+			{
+				for(map<string, InfoSprite>::iterator it = _map.begin(); _map.end() != it; ++it)
+				{
+					uzing(json_t*, p_json_atlas, json_object())
+					{
+						if(0 == json_array_append(p_json_array_atlases, p_json_atlas))
+						{
+							if(0 == json_object_set_new(p_json_atlas, "name", json_string(it->first.c_str())))
+							{
+
+							}
+
+							float all_uv[4][2];
+							it->second.getRect().toFloatArray(all_uv);
+							float uv[2][2] = { { all_uv[0][0], all_uv[0][1] }, { all_uv[2][0], all_uv[2][1] } };
+							float* p_uv = &uv[0][0];
+
+							uzing(json_t*, p_json_array_uv, json_array())
+							{
+								if(0 == json_object_set_new(p_json_atlas, "uv", p_json_array_uv))
+								{
+									for(int i = 0; i < 4; ++i)
+									{
+										json_array_append_new(p_json_array_uv, json_real(p_uv[i]));
+									}
+								}
+							}
+
+							if(0 == json_object_set_new(p_json_atlas, "cols", json_integer(it->second.getCols())))
+							{
+
+							}
+
+						}
+						else
+						{
+							printf("Error:append\n");
+						}
+					}
+					else
+					{
+						printf("Error:json_object_set_new(classes)\n");
+					}
+				}
+
+				if(0 == json_dump_file(p_json_root, fileName, 0))
+				{
+					printf("OK:(%s)\n", fileName);
+					json_decref(p_json_root);
+
+					return true;
+				}
+				else
+				{
+					json_decref(p_json_root);
+					printf("Error:json_dump_file(%s)\n", fileName);
+				}
+			}
+			else
+			{
+				json_decref(p_json_root);
+			}
+		}
+		else
+		{
+			json_decref(p_json_root);
+		}
+	}
+
+	return false;
+}
+

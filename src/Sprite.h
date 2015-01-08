@@ -1,5 +1,5 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#ifndef _SPRITE_H_
+#define _SPRITE_H_
 
 #include "VBO.h"
 
@@ -10,4 +10,5 @@ public:
 	~Sprite();
 };
 
-#endif // SPRITE_H
+#endif
+

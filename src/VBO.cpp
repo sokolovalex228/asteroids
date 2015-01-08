@@ -49,25 +49,25 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 		{rectTVerts.getX() + rectTVerts.getWidth(), rectTVerts.getY() + rectTVerts.getHeight()},
 	};
 
-	if(size_t nSize = sizeof(arVerts) / sizeof(arVerts[0][0]))
+	if(size_t size = sizeof(arVerts) / sizeof(arVerts[0][0]))
 	{
 		if(float* p_float = &arVerts[0][0])
 		{
-			for(size_t nIx = 0; nIx < nSize; nIx++)
+			for(size_t i = 0; i < size; i++)
 			{
-				_verts.push_back(p_float[nIx]);
-			} // nIx
+				_verts.push_back(p_float[i]);
+			} // i
 		}
 	}
-	
-	if(size_t nSize = sizeof(arTVerts) / sizeof(arTVerts[0][0]))
+
+	if(size_t size = sizeof(arTVerts) / sizeof(arTVerts[0][0]))
 	{
 		if(float* p_float = &arTVerts[0][0])
 		{
-			for(size_t nIx = 0; nIx < nSize; nIx++)
+			for(size_t i = 0; i < size; i++)
 			{
-				_tverts.push_back(p_float[nIx]);
-			} // nIx
+				_tverts.push_back(p_float[i]);
+			} // i
 		}
 	}
 
@@ -84,7 +84,7 @@ bool VBO::draw()
 	glTexCoordPointer(2, GL_FLOAT, 0, &_tverts[0]);
 
 	glDrawArrays(GL_TRIANGLES, 0, _verts.size() / 3);
-	
+
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	return true;

@@ -1,4 +1,3 @@
-#include "defs.h"
 #include "Texture.h"
 #include "Utils.h"
 
@@ -38,7 +37,7 @@ bool Texture::load(const char* fileName)
 	{
 		glGenTextures(1, &_id);
 		glBindTexture(GL_TEXTURE_2D, _id);
-		
+
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &data[0]);
 
 		glEnable(GL_BLEND);
@@ -67,6 +66,6 @@ bool Texture::draw()
 
 		return true;
 	}
-	
+
 	return false;
 }

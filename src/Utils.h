@@ -9,6 +9,7 @@ using namespace std;
 namespace Utils
 {
 	bool loadPNGToMemory(const char* fileName, uint* width, uint* height, uint* bpp, vector<uchar>& r_vector_uchar_Out);
+	bool loadFromAssets(const char* fileName, std::vector<char>& buffer);
 
 	inline float getRandom()
 	{

@@ -56,6 +56,31 @@ public:
 		return _height;
 	}
 
+	inline void fromFloatArray(float arr[4][2])
+	{
+		_x = arr[0][0];
+		_y = arr[0][1];
+
+		_width = arr[1][0] - _x;
+		_height = arr[2][1] - _y;
+	}
+
+	inline void toFloatArray(float arr[4][2])
+	{
+		arr[0][0] = _x;
+		arr[0][1] = _y;
+
+		arr[1][0] = _x + _width;
+		arr[1][1] = _y;
+
+		arr[2][0] = _x + _width;
+		arr[2][1] = _y + _height;
+
+		arr[3][0] = _x;
+		arr[3][1] = _y + _height;
+	}
+
+
 private:
 	float _x;
 	float _y;

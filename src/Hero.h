@@ -1,5 +1,5 @@
-#ifndef HERO_H
-#define HERO_H
+#ifndef _HERO_H_
+#define _HERO_H_
 
 #include "Sprite.h"
 
@@ -10,4 +10,4 @@ public:
 	~Hero();
 };
 
-#endif // HERO_H
+#endif
