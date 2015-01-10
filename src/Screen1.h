@@ -1,13 +1,21 @@
 #ifndef _SCREEN1_H_
 #define _SCREEN1_H_
 
+#include "Object.h"
+
 class Screen1
 {
 public:
 	Screen1();
 	~Screen1();
 
+	inline Object* getRoot()
+	{
+		return &_root;
+	}
+
 private:
+	Object _root;
 
 	float _stepMove;
 

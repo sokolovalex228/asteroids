@@ -1,6 +1,6 @@
 #include "InfoSprite.h"
 
-InfoSprite::InfoSprite()
+InfoSprite::InfoSprite() : _cols(0)
 {
 
 }

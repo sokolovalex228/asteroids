@@ -12,14 +12,14 @@ class VectorPtr :
 public:
 	VectorPtr()
 	{
-		
+
 	}
-	
+
 	virtual ~VectorPtr()
 	{
 		clear();
 	}
-	
+
 	inline T* getAt(size_t nIndex) const
 	{
 		return vector<T*>::operator[](nIndex);
@@ -29,42 +29,55 @@ public:
 	{
 		return vector<T*>::size();
 	}
-	
-	inline void add(T* pT)
+
+	inline T* add(T* pT)
 	{
 		if(nullptr != pT)
 		{
 			vector<T*>::push_back(pT);
 		}
+
+		return pT;
 	}
-	
+
 	inline T* addNew()
 	{
-		if(T* pT = new T())
+		return add(new T());
+	}
+
+	T* detach(T* pT)
+	{
+		if(size_t size = getSize())
 		{
-			vector<T*>::push_back(pT);
-			return pT;
+			for(size_t i = 0; i < size; ++i)
+			{
+				if(vector<T*>::operator[](i) == pT)
+				{
+					vector<T*>::erase(vector<T*>::begin() + i);
+					break;
+				}
+			}
 		}
 
-		return nullptr;
+		return pT;
 	}
-	
+
 	void clear()
 	{
 		if(size_t size = getSize())
 		{
-			for(size_t i = 0; i < size; i++)
+			for(size_t i = 0; i < size; ++i)
 			{
 				if(T* pT = vector<T*>::operator[](i))
 				{
 					delete pT;
 				}
 			}
-			
+
 			vector<T*>::clear();
 		}
 	}
-	
+
 };
 
 #endif

@@ -14,14 +14,16 @@ SOURCES += main.cpp \
 	src/Utils.cpp \
 	src/Atlas.cpp \
 	src/Screen1.cpp \
-    src/InfoSprite.cpp
+    src/InfoSprite.cpp \
+    src/Object.cpp
 
 HEADERS += src/*.h \
     src/Sprite.h \
     src/Hero.h \
     src/Asteroid.h \
     src/Screen1.h \
-    src/InfoSprite.h
+    src/InfoSprite.h \
+    src/Object.h
 
 SOURCES += src/GameAsteroids.cpp
 SOURCES += src/VBO.cpp

@@ -1,4 +1,5 @@
 #include "Screen1.h"
+#include "Asteroid.h"
 
 Screen1::Screen1()
 {
@@ -10,6 +11,8 @@ Screen1::Screen1()
 	_msTimeStep = 10;
 	_msTimeShoot = 2000;
 	_msTimeBetweenShoot = 0;
+
+	_root.addChild(new Asteroid());
 }
 
 Screen1::~Screen1()

@@ -150,7 +150,6 @@ bool Atlas::save(const char* fileName)
 							{
 
 							}
-
 						}
 						else
 						{
@@ -172,19 +171,20 @@ bool Atlas::save(const char* fileName)
 				}
 				else
 				{
-					json_decref(p_json_root);
 					printf("Error:json_dump_file(%s)\n", fileName);
 				}
 			}
 			else
 			{
-				json_decref(p_json_root);
+				printf("Error:json_object_set_new\n");
 			}
 		}
 		else
 		{
-			json_decref(p_json_root);
+			printf("Error:json_array\n");
 		}
+
+		json_decref(p_json_root);
 	}
 
 	return false;

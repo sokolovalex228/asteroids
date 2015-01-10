@@ -53,7 +53,7 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 	{
 		if(float* p_float = &arVerts[0][0])
 		{
-			for(size_t i = 0; i < size; i++)
+			for(size_t i = 0; i < size; ++i)
 			{
 				_verts.push_back(p_float[i]);
 			} // i
@@ -64,7 +64,7 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 	{
 		if(float* p_float = &arTVerts[0][0])
 		{
-			for(size_t i = 0; i < size; i++)
+			for(size_t i = 0; i < size; ++i)
 			{
 				_tverts.push_back(p_float[i]);
 			} // i

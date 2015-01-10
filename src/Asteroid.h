@@ -7,7 +7,7 @@ class Asteroid : public Sprite
 {
 public:
 	Asteroid();
-	~Asteroid();
+	virtual ~Asteroid();
 };
 
 #endif
