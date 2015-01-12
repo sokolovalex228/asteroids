@@ -18,7 +18,7 @@ public:
 	bool run();
 	bool done();
 
-	void render();
+	void draw();
 	void mouseMove(int x, int y);
 	void mouseLeft(int x, int y, bool down);
 	void resize(int width, int height);

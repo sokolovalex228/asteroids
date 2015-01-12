@@ -13,6 +13,7 @@ GameAsteroids::~GameAsteroids()
 
 bool GameAsteroids::init()
 {
+	screen1.init();
 	Point3f p;
 	VectorPtr<Point3f> v;
 
@@ -30,9 +31,10 @@ bool GameAsteroids::done()
 	return true;
 }
 
-void GameAsteroids::render()
+void GameAsteroids::draw()
 {
-
+	glClearColor((float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, 1.0);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
 void GameAsteroids::mouseMove(int x, int y)

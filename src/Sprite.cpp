@@ -10,3 +10,8 @@ Sprite::~Sprite()
 
 }
 
+void Sprite::draw()
+{
+	_vbo.draw();
+}
+

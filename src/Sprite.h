@@ -10,6 +10,8 @@ public:
 	Sprite();
 	virtual ~Sprite();
 
+	virtual void draw();
+
 private:
 	VBO _vbo;
 };

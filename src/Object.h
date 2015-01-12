@@ -10,6 +10,22 @@ public:
 	Object();
 	virtual ~Object();
 
+	virtual bool construct();
+
+	virtual void draw();
+
+	static void drawObject(Object* pObjectRoot)
+	{
+		pObjectRoot->draw();
+
+		int size = pObjectRoot->getSizeChildren();
+
+		for(int i = 0; i < size; ++i)
+		{
+			drawObject(pObjectRoot->getChild(i));
+		}
+	}
+
 	inline Object* addChild(Object* pObject)
 	{
 		return _children.add(pObject);

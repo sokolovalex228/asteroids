@@ -10,3 +10,7 @@ Asteroid::~Asteroid()
 
 }
 
+bool Asteroid::init()
+{
+	return false;
+}

@@ -14,16 +14,16 @@ SOURCES += main.cpp \
 	src/Utils.cpp \
 	src/Atlas.cpp \
 	src/Screen1.cpp \
-    src/InfoSprite.cpp \
-    src/Object.cpp
+	src/InfoSprite.cpp \
+	src/Object.cpp
 
 HEADERS += src/*.h \
-    src/Sprite.h \
-    src/Hero.h \
-    src/Asteroid.h \
-    src/Screen1.h \
-    src/InfoSprite.h \
-    src/Object.h
+	src/Sprite.h \
+	src/Hero.h \
+	src/Asteroid.h \
+	src/Screen1.h \
+	src/InfoSprite.h \
+	src/Object.h
 
 SOURCES += src/GameAsteroids.cpp
 SOURCES += src/VBO.cpp
@@ -31,7 +31,7 @@ SOURCES += src/VBO.cpp
 include(deployment.pri)
 qtcAddDeployment()
 
-LIBS += -lX11 -lXrandr -lGL -lglut -lGLESv2 -lpng12 -ljansson
+LIBS += -lGL -lGLESv2 -lpng12 -ljansson -lSDL2
 
 DISTFILES += \
 	task.txt

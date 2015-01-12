@@ -3,6 +3,16 @@
 
 Screen1::Screen1()
 {
+	reset();
+}
+
+Screen1::~Screen1()
+{
+
+}
+
+void Screen1::reset()
+{
 	_leftDown = false;
 	_rightDown = false;
 
@@ -11,12 +21,16 @@ Screen1::Screen1()
 	_msTimeStep = 10;
 	_msTimeShoot = 2000;
 	_msTimeBetweenShoot = 0;
-
-	_root.addChild(new Asteroid());
 }
 
-Screen1::~Screen1()
+bool Screen1::init()
 {
+	_root.addChild(new Asteroid());
 
+	return false;
 }
 
+void Screen1::draw()
+{
+	Object::drawObject(&_root);
+}

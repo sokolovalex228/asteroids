@@ -8,6 +8,8 @@ class Asteroid : public Sprite
 public:
 	Asteroid();
 	virtual ~Asteroid();
+
+	virtual bool init();
 };
 
 #endif

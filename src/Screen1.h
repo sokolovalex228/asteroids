@@ -9,6 +9,10 @@ public:
 	Screen1();
 	~Screen1();
 
+	bool init();
+	void reset();
+	void draw();
+
 	inline Object* getRoot()
 	{
 		return &_root;

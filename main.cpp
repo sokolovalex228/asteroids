@@ -1,175 +1,129 @@
-#include <X11/X.h>
-#include <X11/keysym.h>
-#include <X11/extensions/Xrandr.h>
-#include <GL/glut.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <jansson.h>
+#include "SDL2/SDL.h"
 
 #include "GameAsteroids.h"
 
-static int gWinId = 0;
-
-typedef struct{ int x; int y; }t_size;
-
-t_size getScreenSize()
+int main(int argc, char* argv[])
 {
-	uzing(Display*, pDisplay, XOpenDisplay(NULL))
+	(void)argc;
+	(void)argv;
+
+	SDL_Init(SDL_INIT_VIDEO);
+
+	int widthWindow = 480;
+	int heightWindow = 800;
+	bool gameRunning = true;
+
+	uzing(SDL_Window*, pSDL_Window, SDL_CreateWindow("Asteroids", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, widthWindow, heightWindow, SDL_WINDOW_OPENGL))
 	{
-		int numScreens;
-
-		uzing(XRRScreenSize*, pXRRScreenSize, XRRSizes(pDisplay, 0, &numScreens))
+		uzing(SDL_GLContext, context, SDL_GL_CreateContext(pSDL_Window))
 		{
-			Window aWindowDesktop = RootWindow(pDisplay, 0);
-
-			uzing(XRRScreenConfiguration*, pXRRScreenConfiguration, XRRGetScreenInfo(pDisplay, aWindowDesktop))
-			{
-				Rotation aRotation;
-				SizeID indexConfig = XRRConfigCurrentConfiguration(pXRRScreenConfiguration, &aRotation);
-
-				t_size size
-				{
-					pXRRScreenSize[indexConfig].width,
-					pXRRScreenSize[indexConfig].height,
-				};
-
-				XCloseDisplay(pDisplay);
-
-				return size;
-			}
-			else
-			{
-				printf("Error: XRRGetScreenInfo\n");
-				XCloseDisplay(pDisplay);
-			}
-		}
-		else
-		{
-			printf("Error: XRRSizes\n");
-			XCloseDisplay(pDisplay);
-		}
-	}
-	else
-	{
-		printf("Error: XOpenDisplay\n");
-	}
-
-	return {0, 0};
-}
-
-void onDisplay()
-{
-	gameAsteroids.render();
-
-	glClearColor((float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, 1.0);
-	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-	usleep(100 * 1000);
-
-	glutSwapBuffers();
-}
-
-void onKeyboard(unsigned char key, int x, int y)
-{
-	(void)x;
-	(void)y;
-
-	switch (key)
-	{
-		case 27: // Escape key
-		{
-			glutDestroyWindow(gWinId);
-			printf("exit\n");
-
-			exit(0);
-			break;
-		}
-	}
-
-	glutPostRedisplay();
-}
-
-void onMouseMove(int x, int y)
-{
-	gameAsteroids.mouseMove(x, y);
-}
-
-void onMouseClick(int button, int state, int x, int y)
-{
-	switch (button)
-	{
-		case GLUT_LEFT_BUTTON:
-		{
-			if (GLUT_UP == state)
-			{
-				gameAsteroids.mouseLeft(x, y, false);
-			}
-			else if (GLUT_DOWN == state)
-			{
-				gameAsteroids.mouseLeft(x, y, true);
-			}
-
-			break;
-		}
-	}
-}
-
-void onResize(int width, int height)
-{
-	gameAsteroids.resize(width, height);
-}
-
-int main(int argc, char** argv)
-{
-#if 1
-	char buff[1024];
-	getcwd(buff, sizeof(buff));
-	printf("getcwd(%s)\n", buff);
-	fflush(stdout);
-#endif
-
-	t_size sizeScreen = getScreenSize();
-
-	if (0 < sizeScreen.x)
-	{
-		glutInit(&argc, argv);
-
-		if (0 != (gWinId = glutCreateWindow("Asteroids")))
-		{
-			int widthWindow = 480;
-			int heightWindow = 800;
-
-			int xWindow = (sizeScreen.x - widthWindow) / 2;
-			int yWindow = (sizeScreen.y - heightWindow) / 2;
-
-			glutInitWindowSize(widthWindow, heightWindow);
-			glutInitWindowPosition(xWindow, yWindow);
-
-			glutPositionWindow(xWindow, yWindow);
-			glutKeyboardFunc(onKeyboard);
-			glutMouseFunc(onMouseClick);
-			glutReshapeFunc(onResize);
-			//glutMotionFunc(OnMouseMove);
-			glutPassiveMotionFunc(onMouseMove);
-			glutReshapeWindow(widthWindow, heightWindow);
-
-			glutIdleFunc(onDisplay);
-			glutDisplayFunc(onDisplay);
+			SDL_GL_MakeCurrent(pSDL_Window, context);
 
 			gameAsteroids.initialize();
 
-			glutMainLoop();
+			SDL_Event event;
+
+			while(true == gameRunning)
+			{
+				while(SDL_PollEvent(&event))
+				{
+					switch(event.type)
+					{
+						case SDL_MOUSEMOTION:
+						{
+							gameAsteroids.mouseMove(event.motion.x, event.motion.y);
+							break;
+						}
+
+						case SDL_MOUSEWHEEL:
+						{
+							break;
+						}
+
+						case SDL_MOUSEBUTTONDOWN:
+						{
+							switch(event.button.button)
+							{
+								case SDL_BUTTON_LEFT:
+									gameAsteroids.mouseLeft(event.button.x, event.button.y, true);
+									break;
+							}
+
+							break;
+						}
+
+						case SDL_MOUSEBUTTONUP:
+						{
+							switch(event.button.button)
+							{
+								case SDL_BUTTON_LEFT:
+									gameAsteroids.mouseLeft(event.button.x, event.button.y, false);
+									break;
+							}
+							break;
+						}
+
+						case SDL_WINDOWEVENT_RESIZED:
+						{
+							gameAsteroids.resize(event.window.data1, event.window.data2);
+							break;
+						}
+
+						case SDL_KEYDOWN:
+						{
+							printf("Key press detected\n");
+							break;
+						}
+
+						case SDL_KEYUP:
+						{
+							SDL_Keycode keyPressed = event.key.keysym.sym;
+
+							switch(keyPressed)
+							{
+								case SDLK_ESCAPE:
+									gameRunning = false;
+									break;
+							}
+
+							break;
+						}
+
+						case SDL_QUIT:
+						{
+							gameAsteroids.done();
+							gameRunning = false;
+							break;
+						}
+
+						default:
+							break;
+					}
+				}
+
+				gameAsteroids.draw();
+
+				SDL_GL_SwapWindow(pSDL_Window);
+
+				SDL_Delay(100);
+			}
+
+			SDL_GL_DeleteContext(context);
 		}
 		else
 		{
-			printf("Error: 0=glutCreateWindow\n");
+			printf("Error: SDL_GL_CreateContext\n");
 		}
+
+		SDL_DestroyWindow(pSDL_Window);
 	}
 	else
 	{
-		printf("Error: getScreenSize\n");
+		printf("Error: SDL_CreateWindow\n");
 	}
 
-	return 0;
+	SDL_Quit();
+
+	return false;
 }
 
