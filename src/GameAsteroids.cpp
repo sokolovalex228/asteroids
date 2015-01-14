@@ -31,10 +31,17 @@ bool GameAsteroids::done()
 	return true;
 }
 
-void GameAsteroids::draw()
+void GameAsteroids::clearScreen()
 {
 	glClearColor((float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, 1.0);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+}
+
+void GameAsteroids::draw()
+{
+	clearScreen();
+
+	screen1.draw();
 }
 
 void GameAsteroids::mouseMove(int x, int y)

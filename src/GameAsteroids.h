@@ -18,6 +18,8 @@ public:
 	bool run();
 	bool done();
 
+	void clearScreen();
+
 	void draw();
 	void mouseMove(int x, int y);
 	void mouseLeft(int x, int y, bool down);

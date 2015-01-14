@@ -1,5 +1,6 @@
 #include "Screen1.h"
 #include "Asteroid.h"
+#include "Button.h"
 
 Screen1::Screen1()
 {
@@ -25,7 +26,11 @@ void Screen1::reset()
 
 bool Screen1::init()
 {
+	_root.addChild(new Button("left"));
+	_root.addChild(new Button("right"));
+
 	_root.addChild(new Asteroid());
+
 
 	return false;
 }

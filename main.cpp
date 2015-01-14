@@ -15,9 +15,9 @@ int main(int argc, char* argv[])
 
 	uzing(SDL_Window*, pSDL_Window, SDL_CreateWindow("Asteroids", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, widthWindow, heightWindow, SDL_WINDOW_OPENGL))
 	{
-		uzing(SDL_GLContext, context, SDL_GL_CreateContext(pSDL_Window))
+		uzing(SDL_GLContext, pSDL_GLContext, SDL_GL_CreateContext(pSDL_Window))
 		{
-			SDL_GL_MakeCurrent(pSDL_Window, context);
+			SDL_GL_MakeCurrent(pSDL_Window, pSDL_GLContext);
 
 			gameAsteroids.initialize();
 
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 				SDL_Delay(100);
 			}
 
-			SDL_GL_DeleteContext(context);
+			SDL_GL_DeleteContext(pSDL_GLContext);
 		}
 		else
 		{
@@ -124,6 +124,6 @@ int main(int argc, char* argv[])
 
 	SDL_Quit();
 
-	return false;
+	return true;
 }
 

@@ -15,7 +15,8 @@ SOURCES += main.cpp \
 	src/Atlas.cpp \
 	src/Screen1.cpp \
 	src/InfoSprite.cpp \
-	src/Object.cpp
+	src/Object.cpp \
+    src/Button.cpp
 
 HEADERS += src/*.h \
 	src/Sprite.h \
@@ -23,7 +24,8 @@ HEADERS += src/*.h \
 	src/Asteroid.h \
 	src/Screen1.h \
 	src/InfoSprite.h \
-	src/Object.h
+	src/Object.h \
+    src/Button.h
 
 SOURCES += src/GameAsteroids.cpp
 SOURCES += src/VBO.cpp
