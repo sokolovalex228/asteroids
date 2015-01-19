@@ -26,6 +26,19 @@ void Screen1::reset()
 
 bool Screen1::init()
 {
+	const char* fileName = "data/out_atlas.png";
+
+	if(true == _texture_atlas.load(fileName))
+	{
+		printf("(%s) id=%d\n", fileName, _texture_atlas.getId());
+
+		_texture_atlas.draw();
+	}
+	else
+	{
+		printf("Error: (%s)\n", fileName);
+	}
+
 	_root.addChild(new Button("left"));
 	_root.addChild(new Button("right"));
 

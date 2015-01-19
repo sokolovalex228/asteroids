@@ -27,7 +27,7 @@ void VBO::clear()
 
 bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 {
-	float arVerts[][3] =
+	float verts[][3] =
 	{
 		{rectVerts.getX(), rectVerts.getY(), 0.0f},
 		{rectVerts.getX() + rectVerts.getWidth(), rectVerts.getY() + rectVerts.getHeight(), 0.0f},
@@ -38,7 +38,7 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 		{rectVerts.getX() + rectVerts.getWidth(), rectVerts.getY() + rectVerts.getHeight(), 0.0f},
 	};
 
-	float arTVerts[][2] =
+	float tverts[][2] =
 	{
 		{rectTVerts.getX(), rectTVerts.getY()},
 		{rectTVerts.getX() + rectTVerts.getWidth(), rectTVerts.getY() + rectTVerts.getHeight()},
@@ -49,9 +49,9 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 		{rectTVerts.getX() + rectTVerts.getWidth(), rectTVerts.getY() + rectTVerts.getHeight()},
 	};
 
-	if(size_t size = sizeof(arVerts) / sizeof(arVerts[0][0]))
+	if(size_t size = sizeof(verts) / sizeof(verts[0][0]))
 	{
-		if(float* p_float = &arVerts[0][0])
+		if(float* p_float = &verts[0][0])
 		{
 			for(size_t i = 0; i < size; ++i)
 			{
@@ -60,9 +60,9 @@ bool VBO::add(const Rect& rectVerts, const Rect& rectTVerts)
 		}
 	}
 
-	if(size_t size = sizeof(arTVerts) / sizeof(arTVerts[0][0]))
+	if(size_t size = sizeof(tverts) / sizeof(tverts[0][0]))
 	{
-		if(float* p_float = &arTVerts[0][0])
+		if(float* p_float = &tverts[0][0])
 		{
 			for(size_t i = 0; i < size; ++i)
 			{
@@ -106,7 +106,7 @@ bool VBO::draw()
 	}
 	else
 	{
-		printf("0=m_nId\n");
+		//printf("(%s): 0=_id\n", __FUNCTION__);
 	}
 #endif
 
@@ -147,3 +147,4 @@ bool VBO::deleteBuffer()
 
 	return false;
 }
+

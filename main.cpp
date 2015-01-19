@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
 		{
 			SDL_GL_MakeCurrent(pSDL_Window, pSDL_GLContext);
 
+			gameAsteroids.resize(widthWindow, heightWindow);
 			gameAsteroids.initialize();
 
 			SDL_Event event;
@@ -60,6 +61,7 @@ int main(int argc, char* argv[])
 									gameAsteroids.mouseLeft(event.button.x, event.button.y, false);
 									break;
 							}
+
 							break;
 						}
 
@@ -82,8 +84,10 @@ int main(int argc, char* argv[])
 							switch(keyPressed)
 							{
 								case SDLK_ESCAPE:
+								{
 									gameRunning = false;
 									break;
+								}
 							}
 
 							break;

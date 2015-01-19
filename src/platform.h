@@ -6,6 +6,7 @@
 #include <memory.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdarg.h>
 
 //#pragma warning(enable:C4005)
 

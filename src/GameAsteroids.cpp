@@ -2,7 +2,7 @@
 
 GameAsteroids gameAsteroids;
 
-GameAsteroids::GameAsteroids()
+GameAsteroids::GameAsteroids() : _width(0), _height(0)
 {
 
 }
@@ -11,24 +11,15 @@ GameAsteroids::~GameAsteroids()
 {
 }
 
-bool GameAsteroids::init()
-{
-	screen1.init();
-	Point3f p;
-	VectorPtr<Point3f> v;
-
-	return false;
-}
-
 bool GameAsteroids::run()
 {
 	printf("%s\n", __FUNCTION__);
 	return true;
 }
 
-bool GameAsteroids::done()
+void GameAsteroids::done()
 {
-	return true;
+
 }
 
 void GameAsteroids::clearScreen()
@@ -37,9 +28,16 @@ void GameAsteroids::clearScreen()
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
+void GameAsteroids::drawCamera()
+{
+
+}
+
 void GameAsteroids::draw()
 {
 	clearScreen();
+
+	drawCamera();
 
 	screen1.draw();
 }
@@ -54,12 +52,26 @@ void GameAsteroids::mouseLeft(int x, int y, bool down)
 
 }
 
-void GameAsteroids::resize(int width, int height)
+void GameAsteroids::setViewport(int width, int height)
 {
+	_width = width;
+	_height = height;
 
+	glViewport(0, 0, _width, _height);
+
+	printf("_width=%d, _height=%d\n", _width, _height);
 }
 
-void GameAsteroids::initialize()
+void GameAsteroids::resize(int width, int height)
 {
+	setViewport(width, height);
+}
 
+bool GameAsteroids::initialize()
+{
+	screen1.init();
+	Point3f p;
+	VectorPtr<Point3f> v;
+
+	return false;
 }

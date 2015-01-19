@@ -11,14 +11,14 @@ typedef unsigned short ushort;
 typedef unsigned long int ulong;
 
 #if defined(__cplusplus)
-	
+
 #else
 
-	#define nullptr 0
+#define nullptr 0
 
-	typedef unsigned int bool;
-	#define true 1
-	#define false 0
+typedef unsigned int bool;
+#define true 1
+#define false 0
 
 #endif
 
@@ -38,6 +38,8 @@ typedef unsigned long int ulong;
 
 #if defined(_DEBUG)
 #define LOG(...) printf(__VA_ARGS__); printf("\n");
+#elif IS_PLATFORM_LINUX
+
 #else
 #define LOG(...)
 #endif

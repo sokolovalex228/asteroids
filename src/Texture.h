@@ -15,6 +15,11 @@ public:
 	bool load(const char* fileName);
 	bool draw();
 
+	inline uint getId()
+	{
+		return _id;
+	}
+
 private:
 	uint _id;
 	uint _width;

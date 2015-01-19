@@ -14,20 +14,24 @@ public:
 	GameAsteroids();
 	~GameAsteroids();
 
-	bool init();
-	bool run();
-	bool done();
-
-	void clearScreen();
-
+	bool initialize();
 	void draw();
 	void mouseMove(int x, int y);
 	void mouseLeft(int x, int y, bool down);
 	void resize(int width, int height);
-	void initialize();
+	void done();
+
+private:
+	bool run();
+	void clearScreen();
+	void drawCamera();
+
+	void setViewport(int width, int height);
 
 private:
 	Screen1 screen1;
+	int _width;
+	int _height;
 };
 
 extern GameAsteroids gameAsteroids;

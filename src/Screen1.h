@@ -2,6 +2,7 @@
 #define _SCREEN1_H_
 
 #include "Object.h"
+#include "Texture.h"
 
 class Screen1
 {
@@ -20,6 +21,7 @@ public:
 
 private:
 	Object _root;
+	Texture _texture_atlas;
 
 	float _stepMove;
 
