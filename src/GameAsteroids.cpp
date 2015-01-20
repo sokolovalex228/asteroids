@@ -2,7 +2,7 @@
 
 GameAsteroids gameAsteroids;
 
-GameAsteroids::GameAsteroids() : _width(0), _height(0)
+GameAsteroids::GameAsteroids() : _widthView(0), _heightView(0)
 {
 
 }
@@ -30,7 +30,14 @@ void GameAsteroids::clearScreen()
 
 void GameAsteroids::drawCamera()
 {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
+	glViewport(0, 0, _widthView, _heightView);
+	glOrtho(_widthView / -2.0, _widthView / 2.0, _heightView / -2.0, _heightView / 2.0, -1000.0, 1000.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void GameAsteroids::draw()
@@ -40,6 +47,9 @@ void GameAsteroids::draw()
 	drawCamera();
 
 	screen1.draw();
+
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+	glutWireSphere(200.0f, 10, 10);
 }
 
 void GameAsteroids::mouseMove(int x, int y)
@@ -49,17 +59,24 @@ void GameAsteroids::mouseMove(int x, int y)
 
 void GameAsteroids::mouseLeft(int x, int y, bool down)
 {
+	if(true == down)
+	{
 
+	}
+	else
+	{
+
+	}
 }
 
 void GameAsteroids::setViewport(int width, int height)
 {
-	_width = width;
-	_height = height;
+	_widthView = width;
+	_heightView = height;
 
-	glViewport(0, 0, _width, _height);
+	glViewport(0, 0, _widthView, _heightView);
 
-	printf("_width=%d, _height=%d\n", _width, _height);
+	printf("_width=%d, _height=%d\n", _widthView, _heightView);
 }
 
 void GameAsteroids::resize(int width, int height)

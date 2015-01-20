@@ -30,8 +30,8 @@ private:
 
 private:
 	Screen1 screen1;
-	int _width;
-	int _height;
+	int _widthView;
+	int _heightView;
 };
 
 extern GameAsteroids gameAsteroids;

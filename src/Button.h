@@ -8,8 +8,9 @@ class Button : public Sprite
 {
 public:
 	Button();
-	Button(const std::string& name);
-	~Button();
+	virtual ~Button();
+
+	bool construct(const std::string& name, const Rect& verts, const Rect& tverts);
 
 private:
 	std::string _name;

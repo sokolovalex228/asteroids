@@ -4,8 +4,10 @@
 
 int main(int argc, char* argv[])
 {
-	(void)argc;
-	(void)argv;
+//	(void)argc;
+//	(void)argv;
+
+	glutInit(&argc, argv);
 
 	SDL_Init(SDL_INIT_VIDEO);
 

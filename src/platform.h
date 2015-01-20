@@ -48,6 +48,8 @@
 #include <libgen.h>
 
 #include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 #include <GLES2/gl2.h>
 
 #include <dlfcn.h>

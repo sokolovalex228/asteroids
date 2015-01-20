@@ -39,8 +39,14 @@ bool Screen1::init()
 		printf("Error: (%s)\n", fileName);
 	}
 
-	_root.addChild(new Button("left"));
-	_root.addChild(new Button("right"));
+	if(Button* pButton = new Button())
+	{
+		pButton->construct("left", Rect(0,0, 100, 100), Rect(0, 0, 1, 1));
+
+		_root.addChild(pButton);
+	}
+
+//	_root.addChild(new Button("right"));
 
 	_root.addChild(new Asteroid());
 
