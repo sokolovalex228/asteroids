@@ -11,12 +11,15 @@ SOURCES += main.cpp \
 	src/Hero.cpp \
 	src/Asteroid.cpp \
 	src/Texture.cpp \
-	src/Utils.cpp \
 	src/Atlas.cpp \
 	src/Screen1.cpp \
 	src/InfoSprite.cpp \
 	src/Object.cpp \
-	src/Button.cpp
+	src/Button.cpp \
+	src/utils.cpp \
+	src/GameAsteroids.cpp \
+	src/VBO.cpp \
+    src/Anim.cpp
 
 HEADERS += src/*.h \
 	src/Sprite.h \
@@ -25,10 +28,9 @@ HEADERS += src/*.h \
 	src/Screen1.h \
 	src/InfoSprite.h \
 	src/Object.h \
-	src/Button.h
-
-SOURCES += src/GameAsteroids.cpp
-SOURCES += src/VBO.cpp
+	src/Button.h \
+	src/utils.h \
+    src/Anim.h
 
 include(deployment.pri)
 qtcAddDeployment()

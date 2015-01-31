@@ -26,7 +26,8 @@ void Screen1::reset()
 
 bool Screen1::init()
 {
-	const char* fileName = "data/out_atlas.png";
+	//const char* fileName = "data/out_atlas.png";
+	const char* fileName = "data/asteroid.png";
 
 	if(true == _texture_atlas.load(fileName))
 	{
@@ -38,6 +39,8 @@ bool Screen1::init()
 	{
 		printf("Error: (%s)\n", fileName);
 	}
+
+	fflush(stdout);
 
 	if(Button* pButton = new Button())
 	{

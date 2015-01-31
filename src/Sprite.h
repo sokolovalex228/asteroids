@@ -3,6 +3,7 @@
 
 #include "Object.h"
 #include "VBO.h"
+#include "Anim.h"
 
 class Sprite : public Object
 {
@@ -14,8 +15,10 @@ public:
 
 	virtual void draw();
 
+
 private:
 	VBO _vbo;
+	VectorPtr<Anim> _anims;
 };
 
 #endif

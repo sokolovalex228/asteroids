@@ -1,4 +1,5 @@
 #include "GameAsteroids.h"
+#include "utils.h"
 
 GameAsteroids gameAsteroids;
 
@@ -24,7 +25,7 @@ void GameAsteroids::done()
 
 void GameAsteroids::clearScreen()
 {
-	glClearColor((float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, 1.0);
+	glClearColor(utils::getRandom(), utils::getRandom(), utils::getRandom(), 1.0);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
@@ -40,16 +41,25 @@ void GameAsteroids::drawCamera()
 	glLoadIdentity();
 }
 
+void drawSphere()
+{
+	glDisable(GL_TEXTURE_2D);
+
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+	glutWireSphere(200.0f, 10, 10);
+
+	glEnable(GL_TEXTURE_2D);
+}
+
 void GameAsteroids::draw()
 {
 	clearScreen();
 
 	drawCamera();
 
-	screen1.draw();
+	drawSphere();
 
-	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	glutWireSphere(200.0f, 10, 10);
+	screen1.draw();
 }
 
 void GameAsteroids::mouseMove(int x, int y)

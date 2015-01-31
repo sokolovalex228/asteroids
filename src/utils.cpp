@@ -1,19 +1,17 @@
-#include "Utils.h"
+#include "utils.h"
 #include "png.h"
 
-namespace Utils
+namespace utils
 {
-
 	FILE* openCheckPNG(const char* fileName)
 	{
 		if(FILE* pFILE = fopen(fileName, "rb"))
 		{
-#define PNG_SIG_LENGTH 4
-			png_byte buf[PNG_SIG_LENGTH];
+			png_byte buf[4];
 
-			if(4 == fread(buf, 1, PNG_SIG_LENGTH, pFILE))
+			if(4 == fread(buf, 1, 4, pFILE))
 			{
-				if(0 == png_sig_cmp(buf, (png_size_t)0, PNG_SIG_LENGTH))
+				if(0 == png_sig_cmp(buf, (png_size_t)0, 4))
 				{
 					return pFILE;
 				}
@@ -34,7 +32,7 @@ namespace Utils
 				if(png_infop info_ptr = png_create_info_struct(png_ptr))
 				{
 					png_init_io(png_ptr, pFILE);
-					png_set_sig_bytes(png_ptr, PNG_SIG_LENGTH);
+					png_set_sig_bytes(png_ptr, 4);
 					png_read_info(png_ptr, info_ptr);
 
 					png_uint_32 w;
@@ -81,36 +79,29 @@ namespace Utils
 					*height = h;
 					*bpp = channels;
 
-					if(png_byte* p_byte = (png_byte*)&data[0])
+					if(png_byte* bytes = (png_byte*)&data[0])
 					{
 						for(uint i = 0; i < h; ++i)
 						{
-							png_read_row(png_ptr, p_byte + row_bytes * (h - 1 - i), NULL);
+							png_read_row(png_ptr, bytes + row_bytes * (h - 1 - i), NULL);
 						}
 
 						png_read_end(png_ptr, NULL);
+
 						png_destroy_info_struct(png_ptr, &info_ptr);
 						png_destroy_read_struct(&png_ptr, 0, 0);
-
 						fclose(pFILE);
+
 						return true;
 					}
-					else
-					{
-						png_destroy_read_struct(&png_ptr, 0, 0);
-						fclose(pFILE);
-					}
+
+					png_destroy_info_struct(png_ptr, &info_ptr);
 				}
-				else
-				{
-					png_destroy_read_struct(&png_ptr, 0, 0);
-					fclose(pFILE);
-				}
+
+				png_destroy_read_struct(&png_ptr, 0, 0);
 			}
-			else
-			{
-				fclose(pFILE);
-			}
+
+			fclose(pFILE);
 		}
 
 		return false;
@@ -126,23 +117,26 @@ namespace Utils
 #else
 	bool loadFromAssets(const char* fileName, std::vector<char>& buffer)
 	{
-		if(FILE* pFILE = fopen(fileName, "rb"))
+		if(FILE* file = fopen(fileName, "rb"))
 		{
-			fseek(pFILE, 0, SEEK_END);
+			fseek(file, 0, SEEK_END);
+
 			fpos_t fpos;
-			fgetpos(pFILE, &fpos);
-			fseek(pFILE, 0, SEEK_SET);
-#if IS_PLATFORM_LINUX
-			if(size_t sz = fpos.__pos)
+			fgetpos(file, &fpos);
+
+			fseek(file, 0, SEEK_SET);
+
+#if defined(__linux)
+			if(size_t size = fpos.__pos)
 #else
-			if(size_t sz = fpos)
+			if(size_t size = fpos)
 #endif
 			{
-				buffer.resize(sz);
-				fread(&buffer[0], sz, 1, pFILE);
+				buffer.resize(size);
+				fread(&buffer[0], size, 1, file);
 			}
 
-			fclose(pFILE);
+			fclose(file);
 
 			return true;
 		}
@@ -151,4 +145,4 @@ namespace Utils
 	}
 #endif
 
-};
+}

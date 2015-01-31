@@ -1,5 +1,5 @@
 #include "Texture.h"
-#include "Utils.h"
+#include "utils.h"
 
 Texture::Texture() : _id(0)
 {
@@ -33,7 +33,7 @@ bool Texture::load(const char* fileName)
 
 	clear();
 
-	if(true == Utils::loadPNGToMemory(fileName, &_width, &_height, &_bpp, data))
+	if(true == utils::loadPNGToMemory(fileName, &_width, &_height, &_bpp, data))
 	{
 		glGenTextures(1, &_id);
 		glBindTexture(GL_TEXTURE_2D, _id);

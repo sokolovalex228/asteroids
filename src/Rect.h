@@ -80,7 +80,6 @@ public:
 		arr[3][1] = _y + _height;
 	}
 
-
 private:
 	float _x;
 	float _y;

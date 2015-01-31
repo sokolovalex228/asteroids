@@ -28,13 +28,16 @@ public:
 
 	inline Object* addChild(Object* pObject)
 	{
-		return _children.add(pObject);
+		_children.add(pObject);
+		pObject->setParent(this);
+
+		return pObject;
 	}
 
 	inline Object* detachChild(Object* pObject)
 	{
 		_children.detach(pObject);
-		_parent = nullptr;
+		pObject->setParent(nullptr);
 
 		return pObject;
 	}
@@ -72,4 +75,4 @@ private:
 	VectorPtr<Object> _children;
 };
 
-#endif // OBJECT_H
+#endif

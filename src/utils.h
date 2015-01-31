@@ -6,7 +6,7 @@ using namespace std;
 
 #include "defs.h"
 
-namespace Utils
+namespace utils
 {
 	bool loadPNGToMemory(const char* fileName, uint* width, uint* height, uint* bpp, vector<uchar>& r_vector_uchar_Out);
 	bool loadFromAssets(const char* fileName, std::vector<char>& buffer);
@@ -16,11 +16,15 @@ namespace Utils
 		return (float)rand() / (RAND_MAX + 1.0f);
 	}
 
+	inline float getRandomMax(float maxValue)
+	{
+		return maxValue * (float)rand() / (RAND_MAX + 1.0f);
+	}
+
 	inline float getRandomZero()
 	{
 		return getRandom() * 2.0f - 1.0f;
 	}
-
-};
+}
 
 #endif

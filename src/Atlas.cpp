@@ -1,5 +1,5 @@
 #include "Atlas.h"
-#include "Utils.h"
+#include "utils.h"
 
 Atlas::Atlas()
 {
@@ -41,7 +41,7 @@ bool Atlas::load(const char* fileName)
 
 	std::vector<char> buffer;
 
-	if(true == Utils::loadFromAssets(fileName, buffer))
+	if(true == utils::loadFromAssets(fileName, buffer))
 	{
 		json_error_t json_error;
 
